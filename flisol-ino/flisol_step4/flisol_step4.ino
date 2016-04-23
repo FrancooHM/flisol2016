@@ -50,7 +50,7 @@ IPAddress myDns(1, 1, 1, 1);
 EthernetClient client;
 
 //char server[] = "www.arduino.cc";
-IPAddress server(192,168,2,100);
+IPAddress server(192,168,2,70);
 
 unsigned long lastConnectionTime = 0;             // last time you connected to the server, in milliseconds
 const unsigned long postingInterval = 3L * 1000L; // delay between updates, in milliseconds
