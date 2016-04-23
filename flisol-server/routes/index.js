@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/hello', function(req, res, next) {
+  console.log('Hola flisol!');
   res.send('Hola flisol!');
 });
 module.exports = router;
