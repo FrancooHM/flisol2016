@@ -8,6 +8,10 @@ router.get('/', function(req, res, next) {
 
 router.get('/hello', function(req, res, next) {
   console.log('Hola flisol!');
-  res.send('Hola flisol!');
+  console.log('HEADERS: ');
+  console.log(req.headers);
+  console.log('BODY: ');
+  console.log(req.body);
+  res.end();
 });
 module.exports = router;
