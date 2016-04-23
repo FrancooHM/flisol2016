@@ -21,7 +21,7 @@ module.exports = function(io) {
       res.end();
     });
 
-    router.post('/hello', function(req, res, next) {
+    router.get('/hello', function(req, res, next) {
       console.log('Hola flisol!');
       console.log('HEADERS: ');
       console.log(req.headers);
