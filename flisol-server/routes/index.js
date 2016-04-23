@@ -9,7 +9,7 @@ module.exports = function(io) {
         res.sendfile('views/index.html');
     });
 
-    router.get('/hello-websockets', function(req, res) {
+    router.post('/hello-websockets', function(req, res) {
       io.emit('arduino');
       console.log('Hola websockets!');
       console.log('HEADERS: ');

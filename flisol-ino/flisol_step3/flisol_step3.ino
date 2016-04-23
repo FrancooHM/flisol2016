@@ -24,7 +24,10 @@
 
 #include <SPI.h>
 #include <Ethernet.h>
+#define trigPin 13
+#define echoPin 12
 
+long duration, distance;
 // assign a MAC address for the ethernet controller.
 // fill in your address here:
 byte mac[] = {
@@ -64,6 +67,22 @@ void setup() {
 }
 
 void loop() {
+  //sensor
+  /* The following trigPin/echoPin cycle is used to determine the
+   distance of the nearest object by bouncing soundwaves off of it. */ 
+   digitalWrite(trigPin, LOW); 
+   delayMicroseconds(2); 
+  
+   digitalWrite(trigPin, HIGH);
+   delayMicroseconds(10); 
+   
+   digitalWrite(trigPin, LOW);
+   duration = pulseIn(echoPin, HIGH);
+   
+   //Calculate the distance (in cm) based on the speed of sound.
+   distance = duration/58.2;
+   Serial.println(distance);
+  
   // if there's incoming data from the net connection.
   // send it out the serial port.  This is for debugging
   // purposes only:
@@ -86,17 +105,12 @@ void httpRequest() {
   // This will free the socket on the WiFi shield
   client.stop();
   String PostData="sample=1023";
-//    String PostData="sample={\"id\":1,";
-//    unsigned char i;
-//    PostData=PostData+"\"importantData\":";
-//    PostData=String(PostData + String(analogRead(i)));
-//    PostData=PostData+"}";  
   
   // if there's a successful connection:
   if (client.connect(server, 3000)) {
     Serial.println("connecting...");
     // send the HTTP POST request:
-    client.println("POST /hello HTTP/1.1");
+    client.println("POST /hello-websockets HTTP/1.1");
     client.println("Host: www.arduino.cc");
     client.println("User-Agent: arduino-ethernet");
     client.println("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
