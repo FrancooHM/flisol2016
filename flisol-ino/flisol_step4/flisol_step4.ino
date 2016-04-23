@@ -1,5 +1,12 @@
+#include <DHT.h>
 #include <Ultrasonic.h>
 
+#define DHTPIN 8     // A que pin esta conectado?
+
+// Descomentar segun cual esten usando!
+#define DHTTYPE DHT11   // DHT 11 
+// Inicializar DHT normal para Arduino de 16mhz
+DHT dht(DHTPIN, DHTTYPE);
 /*
   Repeating Web client
 
@@ -43,7 +50,7 @@ IPAddress myDns(1, 1, 1, 1);
 EthernetClient client;
 
 //char server[] = "www.arduino.cc";
-IPAddress server(192,168,2,101);
+IPAddress server(192,168,2,100);
 
 unsigned long lastConnectionTime = 0;             // last time you connected to the server, in milliseconds
 const unsigned long postingInterval = 3L * 1000L; // delay between updates, in milliseconds
@@ -63,9 +70,22 @@ void setup() {
   // print the Ethernet board/shield's IP address:
   Serial.print("My IP address: ");
   Serial.println(Ethernet.localIP());
+  // Start DHT 
+  dht.begin();
 }
 
 void loop() {
+  delay(100);
+    float h = dht.readHumidity();
+    float t = dht.readTemperature();
+    
+    if (isnan(h) || isnan(t)) {
+        Serial.println("Fallo el DHT!");
+        return;
+      }
+
+  Serial.print("Temp: ");
+  Serial.println(String(t));
   // if there's incoming data from the net connection.
   // send it out the serial port.  This is for debugging
   // purposes only:
