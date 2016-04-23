@@ -1,36 +1,3 @@
-#include <DHT.h>
-#include <Ultrasonic.h>
-
-#define DHTPIN 8     // A que pin esta conectado?
-
-// Descomentar segun cual esten usando!
-#define DHTTYPE DHT11   // DHT 11 
-// Inicializar DHT normal para Arduino de 16mhz
-DHT dht(DHTPIN, DHTTYPE);
-/*
-  Repeating Web client
-
- This sketch connects to a a web server and makes a request
- using a Wiznet Ethernet shield. You can use the Arduino Ethernet shield, or
- the Adafruit Ethernet shield, either one will work, as long as it's got
- a Wiznet Ethernet module on board.
-
- This example uses DNS, by assigning the Ethernet client with a MAC address,
- IP address, and DNS address.
-
- Circuit:
- * Ethernet shield attached to pins 10, 11, 12, 13
-
- created 19 Apr 2012
- by Tom Igoe
- modified 21 Jan 2014
- by Federico Vanzati
-
- http://www.arduino.cc/en/Tutorial/WebClientRepeating
- This code is in the public domain.
-
- */
-
 #include <SPI.h>
 #include <Ethernet.h>
 
@@ -57,7 +24,6 @@ const unsigned long postingInterval = 3L * 1000L; // delay between updates, in m
 // the "L" is needed to use long type numbers
 
 void setup() {
-  // start serial port:
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
@@ -70,22 +36,11 @@ void setup() {
   // print the Ethernet board/shield's IP address:
   Serial.print("My IP address: ");
   Serial.println(Ethernet.localIP());
-  // Start DHT 
-  dht.begin();
 }
 
 void loop() {
   delay(100);
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
-    
-    if (isnan(h) || isnan(t)) {
-        Serial.println("Fallo el DHT!");
-        return;
-      }
 
-  Serial.print("Temp: ");
-  Serial.println(String(t));
   // if there's incoming data from the net connection.
   // send it out the serial port.  This is for debugging
   // purposes only:
@@ -108,7 +63,7 @@ void httpRequest() {
   // This will free the socket on the WiFi shield
   client.stop();
   String PostData="sample=1023";
-  
+
   // if there's a successful connection:
   if (client.connect(server, 3000)) {
     Serial.println("connecting...");
