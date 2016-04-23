@@ -9,10 +9,16 @@ module.exports = function(io) {
         res.sendfile('views/index.html');
     });
 
-    router.get('/arduino', function(req, res) {
-    	res.send("Esto es un emulador de Arduino.");
-        io.emit('arduino');
-
+    router.get('/hello-websockets', function(req, res) {
+      io.emit('arduino');
+      console.log('Hola websockets!');
+      console.log('HEADERS: ');
+      console.log(req.headers);
+      console.log('BODY: ');
+      console.log(req.body);
+      console.log('DATA (sample): ');
+      console.log(req.body.sample);
+      res.end();
     });
 
     router.post('/hello', function(req, res, next) {
